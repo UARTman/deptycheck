@@ -34,6 +34,8 @@ record UnificationTask where
   {auto 0 rhsAreNamed : All IsNamedArg rhsFreeVars}
   ||| Right-hand-side expression
   rhsExpr : TTImp
+  ||| Context in which the unification will be performed
+  context : List Decl
 
 %name UnificationTask task
 

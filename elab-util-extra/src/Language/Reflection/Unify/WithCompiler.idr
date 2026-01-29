@@ -310,12 +310,14 @@ unify' task = do
   let allNames = lhsNames ++ rhsNames
   -- Assemble the type, the value of which is all our free variables + proof of equality
   let checkTargetType =
-    buildUpDPair snocLFV $
-      buildUpDPair snocRFV `(~(task.lhsExpr) ~=~ ~(task.rhsExpr))
+    local task.context $
+      buildUpDPair snocLFV $
+        buildUpDPair snocRFV `(~(task.lhsExpr) ~=~ ~(task.rhsExpr))
   -- Assemble the value (holes + Refl)
   let checkTarget =
-    buildUpTarget (zip lhsNames snocLFV) $
-      buildUpTarget (zip rhsNames snocRFV) `(Refl)
+    local task.context $
+      buildUpTarget (zip lhsNames snocLFV) $
+        buildUpTarget (zip rhsNames snocRFV) `(Refl)
   logPoint DetailedDebug "unifyWithCompiler" [] "Target type: \{show checkTargetType}"
   logPoint DetailedDebug "unifyWithCompiler" [] "Target value: \{show checkTarget}"
   -- Instantiate target type
