@@ -19,14 +19,14 @@ import public Data.Hashable.Base
 
 %default total
 
-allQImpl : Monad m => NamesInfoInTypes => TTImp -> m TTImp -> m TTImp
-allQImpl pi@(IPi _ _ _ _ _ _) r = r
+allQImpl : Monad m => NamesInfoInTypes => TTImp -> TTImp -> m TTImp
+allQImpl pi@(IPi _ _ _ _ _ _) r = pure r
 allQImpl app@(IApp _ _ _) r = do
-  IApp _ procL _ <- r
+  let IApp _ procL _ = r
     | _ => pure `(?)
   case procL of
     Implicit _ _ => pure `(?)
-    _ => r
+    _ => pure r
 allQImpl v@(IVar _ n) _ =
   case lookupType n of
     Just _ => pure v
@@ -37,7 +37,7 @@ allQImpl _ _ = pure `(?)
 |||
 ||| (x -> (y -> z) -> q) becomes (? -> (? -> ?) -> ?)
 allQuestions : NamesInfoInTypes => TTImp -> TTImp
-allQuestions t = runIdentity $ mapATTImp' allQImpl t
+allQuestions t = runIdentity $ mapMTTImp' allQImpl t
 
 ||| An abstract "argument" of a generator
 |||
@@ -48,8 +48,8 @@ record GenArg where
   given : Maybe TTImp
 
 LogPosition GenArg where
-  logPosition (MkGenArg a Nothing) = "\{fromMaybe "" a.name}"
-  logPosition (MkGenArg a $ Just t) = "(\{fromMaybe "" a.name} := \{show t})"
+  logPosition (MkGenArg a Nothing) = "\{fromMaybe "<unnamed arg>" a.name}"
+  logPosition (MkGenArg a $ Just t) = "(\{fromMaybe "<unnamed arg>" a.name} := \{show t})"
 
 unGA : List GenArg -> (List Arg, List (Maybe TTImp))
 unGA [] = ([], [])
@@ -75,17 +75,9 @@ unGA (x :: xs) = let (ys, zs) = unGA xs in (x.arg :: ys, x.given :: zs)
         _ => pure True
     _ => pure True
 
-||| Extracts given values of arguments from a type invocation expression
-export
-getGivens' : NamesInfoInTypes => TTImp -> Maybe (List GenArg)
-getGivens' t = do
-  let (IVar _ tyName, aTerms) = unAppAny t
-    | _ => Nothing
-  let Just tyInfo = lookupType tyName
-    | _ => Nothing
-  Just $ map (uncurry MkGenArg) $ zip tyInfo.args $ popArgVals tyInfo.args (mkAllApps aTerms)
-
 ||| Assemble a list of arguments and their given values from `callGen` inputs
+|||
+||| The indices inside both given lists must be in ascending order
 mkArgs :
   NamesInfoInTypes =>
   (sig : GenSignature) ->
@@ -140,7 +132,6 @@ processArg sig argIdx ga with (ga.given)
         if (snd (unPi ga.arg.type) == `(Type))
           then do
             logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "Given a non-global type expr, passing through"
-            -- pure (x, [])
             pure $ singleArg argIdx ga
           else do
             logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "Given a non-type expr, passing through"
@@ -152,34 +143,28 @@ processArgs :
   (sig : GenSignature) ->
   List GenArg ->
   m (TTImp, List Arg, List $ Maybe TTImp)
-processArgs sig ga = map (bimap (reAppAny $ IVar EmptyFC sig.targetType.name) unGA) $ processArgs' sig 0 ga
+processArgs sig ga = bimap (reAppAny $ IVar EmptyFC sig.targetType.name) unGA <$> processArgs' sig 0 ga
 
+-- From a set of given argument indices, convert a list of their values into a vector that can be fed to callGen
 export
-formGivenVals : Vect l _ -> List TTImp -> Vect l TTImp
-formGivenVals []        _         = []
-formGivenVals (_ :: xs) []        = `(_) :: formGivenVals xs []
-formGivenVals (x :: xs) (y :: ys) = y    :: formGivenVals xs ys
+formGivenVals : (s : SortedSet _) -> List TTImp -> Vect s.size TTImp
+formGivenVals a b = fgvImpl (Vect.fromList $ Prelude.toList a) b
+  where
+    fgvImpl : Vect l _ -> List TTImp -> Vect l TTImp
+    fgvImpl []        _         = []
+    fgvImpl (_ :: xs) []        = `(_) :: fgvImpl xs []
+    fgvImpl (x :: xs) (y :: ys) = y    :: fgvImpl xs ys
 
 genGivens : List (TTImp, Fin x, Arg) -> (s : SortedSet (Fin x) ** Vect s.size TTImp)
 genGivens l = do
   let (l1, l2, l3) = unzip3 l
   let s = SortedSet.fromList l2
-  let gv = formGivenVals (Vect.fromList $ Prelude.toList s) l1
+  let gv = formGivenVals s l1
   (s ** gv)
 
-specTaskToName : TTImp -> Name
-specTaskToName t = do
-  let (_, lamBody) = unLambda t
-  let (callee, _) = unAppAny lamBody
-  let vname =
-    case callee of
-         (IVar _ n) => show $ snd $ unNS n
-         x => show x
-  fromString "\{vname}^\{show $ hash t}"
-
 -- Using the monadic trick makes the performance *much* better.
-specTaskToName' : Monad m => TTImp -> m Name
-specTaskToName' t = do
+specTaskToName : Monad m => TTImp -> m Name
+specTaskToName t = do
   let (_, lamBody) = unLambda t
   let (callee, _) = unAppAny lamBody
   let vname =
@@ -197,7 +182,7 @@ nameUnambigAndVis n = do
 
 allConstructorsVisible : Elaboration m => TypeInfo -> m Bool
 allConstructorsVisible ti = do
-  all id <$> traverse nameUnambigAndVis (name <$> ti.cons)
+  all id <$> traverse (nameUnambigAndVis . name) ti.cons
 
 mkDPairHelper : Nat -> (Name -> TTImp) -> TTImp -> TTImp
 mkDPairHelper 0 _ t = t
@@ -213,7 +198,7 @@ inSameNS : Name -> Name -> Name
 inSameNS (NS ns _) n = NS ns n
 inSameNS _ n = n
 
-export %tcinline
+export
 specialiseIfNeeded :
   Elaboration m =>
   NamesInfoInTypes =>
@@ -254,7 +239,7 @@ specialiseIfNeeded sig fuel givenParamValues = do
   logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "NormaliseTask returned: lambdaTy = \{show lambdaTy};"
   logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "                        lambdaBody = \{show lambdaBody};"
   -- Generate specialised type name
-  specName <- specTaskToName' lambdaBody
+  specName <- specTaskToName lambdaBody
   logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Specialised type name: \{show specName}"
   -- Check if `NamesInfoInTypes` contains specialised type
   (specTy, specDecls) : (TypeInfo, List Decl) <- case lookupType specName of

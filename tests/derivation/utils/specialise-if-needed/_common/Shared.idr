@@ -67,7 +67,7 @@ runSIN namesInfo declareSpec e = do
     | _ => fail "Not all arguments have been given parameters"
   let filtered = filter ((`(_) /=) . snd) $ zip (withIndex ti.args) $ map getExpr rs
   let givenSet = SortedSet.fromList $ (fst . fst) <$> filtered
-  let givenVals = formGivenVals (Vect.fromList (Prelude.toList givenSet)) $ snd <$> filtered
+  let givenVals = formGivenVals givenSet $ snd <$> filtered
   let dc = PrintDC @{%search}
 
   _ <- getConsRecs
@@ -102,7 +102,7 @@ runSIN' namesInfo declareSpec e = do
     | No _ => fail "Type info has unnamed arguments"
   let filtered = filter ((`(_) /=) . snd) $ zip (withIndex ti.args) rs
   let givenSet = SortedSet.fromList $ (fst . fst) <$> filtered
-  let givenVals = formGivenVals (Vect.fromList (Prelude.toList givenSet)) $ snd <$> filtered
+  let givenVals = formGivenVals givenSet $ snd <$> filtered
   let dc = WriterDC @{%search}
 
   _ <- getConsRecs

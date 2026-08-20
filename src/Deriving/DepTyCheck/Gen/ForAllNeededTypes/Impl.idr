@@ -73,10 +73,11 @@ DeriveBodyForType => ClosuringContext m => Elaboration m => SortedMap GenSignatu
     -- check if internal generator asked for is for a primitive type
     when (isTypeInfoPrim sig.targetType) $
       fail "Cannot derive generator for the primitive type \{show $ extractTargetTyExpr sig.targetType}, use external instead"
+    -- the monadic bind is used due to over-normalisation during elaborator script execution causing bad derivator performance otherwise
     notfound <- pure $ id $ not $ List.Set.contains sig %search
 
-    sinRet : Maybe TTImp <- if notfound then assert_total specialiseIfNeeded sig fuel values else pure Nothing
-    let Nothing = sinRet
+    --       The braces here ↓ are so that the compiler doesn't confuse this with a with application
+    Nothing : Maybe TTImp <- (if notfound then assert_total specialiseIfNeeded sig fuel values else pure Nothing)
       | Just me => pure (me, Nothing)
 
     -- remember the task to derive, if necessary
