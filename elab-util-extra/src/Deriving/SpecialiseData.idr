@@ -115,6 +115,7 @@ UniResults = List UnificationVerdict
 
 public export
 record SpecialisationParams where
+  [noHints]
   constructor MkSpecParams
   eraseConNames : Bool
 

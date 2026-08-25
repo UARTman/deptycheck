@@ -2,8 +2,8 @@
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> Gen MaybeEmpty UseLookup
 LOG deptycheck.derive.least-effort:7: DerivedGen.UseLookup[] UL - used final order: [#0]
 LOG deptycheck.util.specialisation:10: DerivedGen.Lookup[0(b), 1(a), 2, 3] Declared specialised type DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048: DerivedGen.Lookup {b = Builtin.Pair Prelude.Basics.Bool (Builtin.Pair Prelude.Basics.Bool Prelude.Basics.Bool)} {a = Prelude.Basics.Bool} lam^0 lam^1
-LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048[0(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0), 1(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1)] Lookup^7730538649293255048^Con^0 - used final order: []
-LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048[0(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0), 1(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1)] Lookup^7730538649293255048^Con^1 - used final order: [#4]
+LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048[0(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0), 1(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1)] Here - used final order: []
+LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048[0(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0), 1(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1)] There - used final order: [#4]
     MkArg MW ExplicitArg (Just "^outmost-fuel^") (var "Data.Fuel.Fuel")
 .=> local
       { decls =
@@ -69,7 +69,7 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                    , opts = []
                                    , type =
                                        mkTy
-                                         { name = "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>"
+                                         { name = "<<DerivedGen.Lookup^7730538649293255048.Here>>"
                                          , type =
                                                  MkArg MW ExplicitArg Nothing (var "Data.Fuel.Fuel")
                                              .-> MkArg MW ExplicitArg (Just "fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0") (var "Prelude.Basics.Bool")
@@ -99,7 +99,7 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                    , opts = []
                                    , type =
                                        mkTy
-                                         { name = "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^1>>"
+                                         { name = "<<DerivedGen.Lookup^7730538649293255048.There>>"
                                          , type =
                                                  MkArg MW ExplicitArg Nothing (var "Data.Fuel.Fuel")
                                              .-> MkArg MW ExplicitArg (Just "fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0") (var "Prelude.Basics.Bool")
@@ -123,10 +123,10 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                              }
                          , IDef
                              emptyFC
-                             "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>"
+                             "<<DerivedGen.Lookup^7730538649293255048.Here>>"
                              [ withClause
                                  { lhs =
-                                        var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>"
+                                        var "<<DerivedGen.Lookup^7730538649293255048.Here>>"
                                      .$ bindVar "^cons_fuel^"
                                      .$ bindVar "x"
                                      .$ (   var "Prelude.Basics.(::)"
@@ -152,7 +152,7 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                  , prf = Nothing
                                  , flags = []
                                  , clauses =
-                                     [       var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>"
+                                     [       var "<<DerivedGen.Lookup^7730538649293255048.Here>>"
                                           .$ bindVar "^cons_fuel^"
                                           .$ bindVar "x"
                                           .$ (   var "Prelude.Basics.(::)"
@@ -175,14 +175,11 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                               .$ bindVar "xys")
                                           .$ (var "Prelude.Yes" .$ var "Builtin.Refl")
                                        .=    var "Test.DepTyCheck.Gen.label"
-                                          .$ (var "fromString" .$ primVal (Str "DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0 (orders)"))
+                                          .$ (var "fromString" .$ primVal (Str "DerivedGen.Lookup^7730538649293255048.Here (orders)"))
                                           .$ (   var "Prelude.pure"
                                               .! ("f", var "Test.DepTyCheck.Gen.Gen" .$ implicitTrue)
-                                              .$ (   var "DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0"
-                                                  .! ("x", var "x")
-                                                  .! ("xys", var "xys")
-                                                  .$ var "y"))
-                                     ,       var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>"
+                                              .$ (var "DerivedGen.Lookup^7730538649293255048.Here" .! ("x", var "x") .! ("xys", var "xys") .$ var "y"))
+                                     ,       var "<<DerivedGen.Lookup^7730538649293255048.Here>>"
                                           .$ bindVar "^cons_fuel^"
                                           .$ bindVar "x"
                                           .$ (   var "Prelude.Basics.(::)"
@@ -207,12 +204,12 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                        .= var "empty"
                                      ]
                                  }
-                             , var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
+                             , var "<<DerivedGen.Lookup^7730538649293255048.Here>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
                              ]
                          , IDef
                              emptyFC
-                             "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^1>>"
-                             [       var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^1>>"
+                             "<<DerivedGen.Lookup^7730538649293255048.There>>"
+                             [       var "<<DerivedGen.Lookup^7730538649293255048.There>>"
                                   .$ bindVar "^cons_fuel^"
                                   .$ bindVar "z"
                                   .$ (   var "Prelude.Basics.(::)"
@@ -234,19 +231,19 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                           .$ bindVar "y")
                                       .$ bindVar "xys")
                                .=    var "Test.DepTyCheck.Gen.label"
-                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^1 (orders)"))
+                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Lookup^7730538649293255048.There (orders)"))
                                   .$ (   var ">>="
                                       .$ (var "<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048>[0, 1]" .$ var "^cons_fuel^" .$ var "z" .$ var "xys")
                                       .$ (    MkArg MW ExplicitArg (Just "{arg:1}") implicitFalse
                                           .=>    var "Prelude.pure"
                                               .! ("f", var "Test.DepTyCheck.Gen.Gen" .$ implicitTrue)
-                                              .$ (   var "DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^1"
+                                              .$ (   var "DerivedGen.Lookup^7730538649293255048.There"
                                                   .! ("x", var "x")
                                                   .! ("y", var "y")
                                                   .! ("z", implicitTrue)
                                                   .! ("xys", implicitTrue)
                                                   .$ var "{arg:1}")))
-                             , var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^1>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
+                             , var "<<DerivedGen.Lookup^7730538649293255048.There>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
                              ]
                          ]
                      , scope =
@@ -260,7 +257,7 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                         .$ primVal
                                              (Str
                                                 "DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048[0(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0), 1(fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1)] (dry fuel)"))
-                                    .$ (   var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>"
+                                    .$ (   var "<<DerivedGen.Lookup^7730538649293255048.Here>>"
                                         .$ var "^fuel_arg^"
                                         .$ var "inter^<fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0>"
                                         .$ var "inter^<fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1>")
@@ -274,14 +271,14 @@ LOG deptycheck.derive.least-effort:7: DerivedGen.Lookup^7730538649293255048.Look
                                         .$ (   var "::"
                                             .$ (   var "Builtin.MkPair"
                                                 .$ var "Data.Nat1.one"
-                                                .$ (   var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^0>>"
+                                                .$ (   var "<<DerivedGen.Lookup^7730538649293255048.Here>>"
                                                     .$ var "^fuel_arg^"
                                                     .$ var "inter^<fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0>"
                                                     .$ var "inter^<fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1>"))
                                             .$ (   var "::"
                                                 .$ (   var "Builtin.MkPair"
                                                     .$ (var "Deriving.DepTyCheck.Gen.ConsRecs.leftDepth" .$ var "^sub^fuel_arg^")
-                                                    .$ (   var "<<DerivedGen.Lookup^7730538649293255048.Lookup^7730538649293255048^Con^1>>"
+                                                    .$ (   var "<<DerivedGen.Lookup^7730538649293255048.There>>"
                                                         .$ var "^sub^fuel_arg^"
                                                         .$ var "inter^<fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^0>"
                                                         .$ var "inter^<fv^Lookup^7730538649293255048.Lookup^7730538649293255048^lam^1>"))

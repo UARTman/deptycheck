@@ -5,10 +5,10 @@ LOG deptycheck.util.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared
 LOG deptycheck.util.specialisation:10: Data.Vect.Vect[0(len), 1(elem)] Declared specialised type DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550: Data.Vect.Vect lam^0 (Data.Fin.Fin lam^1)
 LOG deptycheck.derive.least-effort:7: Prelude.Types.Nat[] Z - used final order: []
 LOG deptycheck.derive.least-effort:7: Prelude.Types.Nat[] S - used final order: [#0]
-LOG deptycheck.derive.least-effort:7: DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550[0(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0), 1(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1)] Vect^1863907217212445550^Con^0 - used final order: []
-LOG deptycheck.derive.least-effort:7: DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550[0(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0), 1(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1)] Vect^1863907217212445550^Con^1 - used final order: [#3 (xs), #2 (x)]
-LOG deptycheck.derive.least-effort:7: DerivedGen.Either^6814960928365568963.Either^6814960928365568963[0(fv^Either^6814960928365568963.Either^6814960928365568963^lam^0), 1(fv^Either^6814960928365568963.Either^6814960928365568963^lam^1), 2(fv^Either^6814960928365568963.Either^6814960928365568963^lam^2), 3(fv^Either^6814960928365568963.Either^6814960928365568963^lam^3)] Either^6814960928365568963^Con^0 - used final order: [#4 (x)]
-LOG deptycheck.derive.least-effort:7: DerivedGen.Either^6814960928365568963.Either^6814960928365568963[0(fv^Either^6814960928365568963.Either^6814960928365568963^lam^0), 1(fv^Either^6814960928365568963.Either^6814960928365568963^lam^1), 2(fv^Either^6814960928365568963.Either^6814960928365568963^lam^2), 3(fv^Either^6814960928365568963.Either^6814960928365568963^lam^3)] Either^6814960928365568963^Con^1 - used final order: [#4 (x)]
+LOG deptycheck.derive.least-effort:7: DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550[0(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0), 1(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1)] Nil - used final order: []
+LOG deptycheck.derive.least-effort:7: DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550[0(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0), 1(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1)] (::) - used final order: [#3 (xs), #2 (x)]
+LOG deptycheck.derive.least-effort:7: DerivedGen.Either^6814960928365568963.Either^6814960928365568963[0(fv^Either^6814960928365568963.Either^6814960928365568963^lam^0), 1(fv^Either^6814960928365568963.Either^6814960928365568963^lam^1), 2(fv^Either^6814960928365568963.Either^6814960928365568963^lam^2), 3(fv^Either^6814960928365568963.Either^6814960928365568963^lam^3)] Left - used final order: [#4 (x)]
+LOG deptycheck.derive.least-effort:7: DerivedGen.Either^6814960928365568963.Either^6814960928365568963[0(fv^Either^6814960928365568963.Either^6814960928365568963^lam^0), 1(fv^Either^6814960928365568963.Either^6814960928365568963^lam^1), 2(fv^Either^6814960928365568963.Either^6814960928365568963^lam^2), 3(fv^Either^6814960928365568963.Either^6814960928365568963^lam^3)] Right - used final order: [#4 (x)]
 LOG deptycheck.derive.least-effort:7: Data.Nat.LTE[0(n), 1(m)] LTEZero - used final order: []
 LOG deptycheck.derive.least-effort:7: Data.Nat.LTE[0(n), 1(m)] LTESucc - used final order: [#2]
 LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FZ - used final order: []
@@ -153,7 +153,7 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                    , opts = []
                                    , type =
                                        mkTy
-                                         { name = "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^0>>"
+                                         { name = "<<DerivedGen.Either^6814960928365568963.Left>>"
                                          , type =
                                                  MkArg MW ExplicitArg Nothing (var "Data.Fuel.Fuel")
                                              .-> MkArg MW ExplicitArg (Just "fv^Either^6814960928365568963.Either^6814960928365568963^lam^0") (var "Prelude.Types.Nat")
@@ -178,7 +178,7 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                    , opts = []
                                    , type =
                                        mkTy
-                                         { name = "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^1>>"
+                                         { name = "<<DerivedGen.Either^6814960928365568963.Right>>"
                                          , type =
                                                  MkArg MW ExplicitArg Nothing (var "Data.Fuel.Fuel")
                                              .-> MkArg MW ExplicitArg (Just "fv^Either^6814960928365568963.Either^6814960928365568963^lam^0") (var "Prelude.Types.Nat")
@@ -197,15 +197,15 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                              }
                          , IDef
                              emptyFC
-                             "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^0>>"
-                             [       var "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^0>>"
+                             "<<DerivedGen.Either^6814960928365568963.Left>>"
+                             [       var "<<DerivedGen.Either^6814960928365568963.Left>>"
                                   .$ bindVar "^cons_fuel^"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^0"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^1"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^2"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^3"
                                .=    var "Test.DepTyCheck.Gen.label"
-                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^0 (orders)"))
+                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Either^6814960928365568963.Left (orders)"))
                                   .$ (   var ">>="
                                       .$ (   var "<Data.Nat.LTE>[0, 1]"
                                           .$ var "^outmost-fuel^"
@@ -214,7 +214,7 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                       .$ (    MkArg MW ExplicitArg (Just "x") implicitFalse
                                           .=>    var "Prelude.pure"
                                               .! ("f", var "Test.DepTyCheck.Gen.Gen" .$ implicitTrue)
-                                              .$ (   var "DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^0"
+                                              .$ (   var "DerivedGen.Either^6814960928365568963.Left"
                                                   .! ("fv^Either^6814960928365568963.Either^6814960928365568963^lam^0", implicitTrue)
                                                   .! ("fv^Either^6814960928365568963.Either^6814960928365568963^lam^1", implicitTrue)
                                                   .! ( "fv^Either^6814960928365568963.Either^6814960928365568963^lam^2"
@@ -227,15 +227,15 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                              ]
                          , IDef
                              emptyFC
-                             "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^1>>"
-                             [       var "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^1>>"
+                             "<<DerivedGen.Either^6814960928365568963.Right>>"
+                             [       var "<<DerivedGen.Either^6814960928365568963.Right>>"
                                   .$ bindVar "^cons_fuel^"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^0"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^1"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^2"
                                   .$ bindVar "fv^Either^6814960928365568963.Either^6814960928365568963^lam^3"
                                .=    var "Test.DepTyCheck.Gen.label"
-                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^1 (orders)"))
+                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Either^6814960928365568963.Right (orders)"))
                                   .$ (   var ">>="
                                       .$ (   var "<Data.Nat.LTE>[0, 1]"
                                           .$ var "^outmost-fuel^"
@@ -244,7 +244,7 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                       .$ (    MkArg MW ExplicitArg (Just "x") implicitFalse
                                           .=>    var "Prelude.pure"
                                               .! ("f", var "Test.DepTyCheck.Gen.Gen" .$ implicitTrue)
-                                              .$ (   var "DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^1"
+                                              .$ (   var "DerivedGen.Either^6814960928365568963.Right"
                                                   .! ( "fv^Either^6814960928365568963.Either^6814960928365568963^lam^0"
                                                      , var "fv^Either^6814960928365568963.Either^6814960928365568963^lam^0"
                                                      )
@@ -265,14 +265,14 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                          .$ (   var "Test.DepTyCheck.Gen.oneOf"
                              .! ("em", var "MaybeEmpty")
                              .$ (   var "::"
-                                 .$ (   var "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^0>>"
+                                 .$ (   var "<<DerivedGen.Either^6814960928365568963.Left>>"
                                      .$ var "^fuel_arg^"
                                      .$ var "inter^<fv^Either^6814960928365568963.Either^6814960928365568963^lam^0>"
                                      .$ var "inter^<fv^Either^6814960928365568963.Either^6814960928365568963^lam^1>"
                                      .$ var "inter^<fv^Either^6814960928365568963.Either^6814960928365568963^lam^2>"
                                      .$ var "inter^<fv^Either^6814960928365568963.Either^6814960928365568963^lam^3>")
                                  .$ (   var "::"
-                                     .$ (   var "<<DerivedGen.Either^6814960928365568963.Either^6814960928365568963^Con^1>>"
+                                     .$ (   var "<<DerivedGen.Either^6814960928365568963.Right>>"
                                          .$ var "^fuel_arg^"
                                          .$ var "inter^<fv^Either^6814960928365568963.Either^6814960928365568963^lam^0>"
                                          .$ var "inter^<fv^Either^6814960928365568963.Either^6814960928365568963^lam^1>"
@@ -298,7 +298,7 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                    , opts = []
                                    , type =
                                        mkTy
-                                         { name = "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0>>"
+                                         { name = "<<DerivedGen.Vect^1863907217212445550.Nil>>"
                                          , type =
                                                  MkArg MW ExplicitArg Nothing (var "Data.Fuel.Fuel")
                                              .-> MkArg MW ExplicitArg (Just "fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0") (var "Prelude.Types.Nat")
@@ -319,7 +319,7 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                    , opts = []
                                    , type =
                                        mkTy
-                                         { name = "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^1>>"
+                                         { name = "<<DerivedGen.Vect^1863907217212445550.(::)>>"
                                          , type =
                                                  MkArg MW ExplicitArg Nothing (var "Data.Fuel.Fuel")
                                              .-> MkArg MW ExplicitArg (Just "fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0") (var "Prelude.Types.Nat")
@@ -334,28 +334,28 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                              }
                          , IDef
                              emptyFC
-                             "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0>>"
-                             [       var "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0>>"
+                             "<<DerivedGen.Vect^1863907217212445550.Nil>>"
+                             [       var "<<DerivedGen.Vect^1863907217212445550.Nil>>"
                                   .$ bindVar "^cons_fuel^"
                                   .$ var "Prelude.Types.Z"
                                   .$ bindVar "fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1"
                                .=    var "Test.DepTyCheck.Gen.label"
-                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0 (orders)"))
+                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Vect^1863907217212445550.Nil (orders)"))
                                   .$ (   var "Prelude.pure"
                                       .! ("f", var "Test.DepTyCheck.Gen.Gen" .$ implicitTrue)
-                                      .$ (   var "DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0"
+                                      .$ (   var "DerivedGen.Vect^1863907217212445550.Nil"
                                           .! ("fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1", var "fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1")))
-                             , var "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
+                             , var "<<DerivedGen.Vect^1863907217212445550.Nil>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
                              ]
                          , IDef
                              emptyFC
-                             "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^1>>"
-                             [       var "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^1>>"
+                             "<<DerivedGen.Vect^1863907217212445550.(::)>>"
+                             [       var "<<DerivedGen.Vect^1863907217212445550.(::)>>"
                                   .$ bindVar "^cons_fuel^"
                                   .$ (var "Prelude.Types.S" .$ bindVar "len")
                                   .$ bindVar "fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1"
                                .=    var "Test.DepTyCheck.Gen.label"
-                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^1 (orders)"))
+                                  .$ (var "fromString" .$ primVal (Str "DerivedGen.Vect^1863907217212445550.(::) (orders)"))
                                   .$ (   var ">>="
                                       .$ (   var "<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550>[0, 1]"
                                           .$ var "^cons_fuel^"
@@ -367,12 +367,12 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                               .$ (    MkArg MW ExplicitArg (Just "x") implicitFalse
                                                   .=>    var "Prelude.pure"
                                                       .! ("f", var "Test.DepTyCheck.Gen.Gen" .$ implicitTrue)
-                                                      .$ (   var "DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^1"
+                                                      .$ (   var "DerivedGen.Vect^1863907217212445550.(::)"
                                                           .! ("len", implicitTrue)
                                                           .! ("fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1", implicitTrue)
                                                           .$ var "x"
                                                           .$ var "xs"))))
-                             , var "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^1>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
+                             , var "<<DerivedGen.Vect^1863907217212445550.(::)>>" .$ implicitTrue .$ implicitTrue .$ implicitTrue .= var "empty"
                              ]
                          ]
                      , scope =
@@ -386,7 +386,7 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                         .$ primVal
                                              (Str
                                                 "DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550[0(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0), 1(fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1)] (dry fuel)"))
-                                    .$ (   var "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0>>"
+                                    .$ (   var "<<DerivedGen.Vect^1863907217212445550.Nil>>"
                                         .$ var "^fuel_arg^"
                                         .$ var "inter^<fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0>"
                                         .$ var "inter^<fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1>")
@@ -400,14 +400,14 @@ LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FS - used final order: 
                                         .$ (   var "::"
                                             .$ (   var "Builtin.MkPair"
                                                 .$ var "Data.Nat1.one"
-                                                .$ (   var "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^0>>"
+                                                .$ (   var "<<DerivedGen.Vect^1863907217212445550.Nil>>"
                                                     .$ var "^fuel_arg^"
                                                     .$ var "inter^<fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0>"
                                                     .$ var "inter^<fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1>"))
                                             .$ (   var "::"
                                                 .$ (   var "Builtin.MkPair"
                                                     .$ (var "Deriving.DepTyCheck.Gen.ConsRecs.leftDepth" .$ var "^sub^fuel_arg^")
-                                                    .$ (   var "<<DerivedGen.Vect^1863907217212445550.Vect^1863907217212445550^Con^1>>"
+                                                    .$ (   var "<<DerivedGen.Vect^1863907217212445550.(::)>>"
                                                         .$ var "^sub^fuel_arg^"
                                                         .$ var "inter^<fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^0>"
                                                         .$ var "inter^<fv^Vect^1863907217212445550.Vect^1863907217212445550^lam^1>"))
