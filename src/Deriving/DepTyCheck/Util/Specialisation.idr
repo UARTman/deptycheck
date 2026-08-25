@@ -62,18 +62,18 @@ unGA (x :: xs) = let (ys, zs) = unGA xs in (x.arg :: ys, x.given :: zs)
 (.isGiven) = isJust . given
 
 ||| Determine if the argument should be specialised or passed through
-(.isSpecialising) : Elaboration m => GenArg -> m Bool
-(.isSpecialising) (MkGenArg a Nothing) = pure False
-(.isSpecialising) (MkGenArg a $ Just g) = do
+(.isPassthrough) : Elaboration m => GenArg -> m Bool
+(.isPassthrough) (MkGenArg a Nothing) = pure True
+(.isPassthrough) (MkGenArg a $ Just g) = do
   let True = snd (unPi a.type) == `(Type)
-    | _ => pure False
+    | _ => pure True
   case g of
     IVar _ n => do
       nInfo <- getInfo n
       case nInfo of
-        [] => pure False
-        _ => pure True
-    _ => pure True
+        [] => pure True
+        _ => pure False
+    _ => pure False
 
 ||| Assemble a list of arguments and their given values from `callGen` inputs
 |||
@@ -224,9 +224,9 @@ specialiseIfNeeded sig fuel givenParamValues = do
   let givenIdxVals = Prelude.toList sig.givenParams `zipV` givenParamValues
   let genArgs = mkArgs sig (withIndex sig.targetType.args) givenIdxVals
   -- Check if at least one `GenArg` can be specialised upon (i.e. is a type argument and has a non-passthrough given value)
-  specable <- traverse (.isSpecialising) genArgs
-  let True = any id specable
-    | False => do
+  -- We need to terminate when all givens are passthrough, because otherwise we'll be stuck endlessly performing identity specialisations of the same type
+  False <- all id <$> traverse (.isPassthrough) genArgs
+    | True => do
       logPoint DetailedDebug "deptycheck.util.specialisation" [sig]
         "Not found any type arguments that can be specialised upon, specialisation impossible."
       pure Nothing
