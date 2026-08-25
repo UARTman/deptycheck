@@ -2,7 +2,7 @@ module Deriving.SpecialiseData
 
 import Control.Monad.Either
 import Control.Monad.Trans
-import Data.DPair
+import public Data.DPair
 import Data.Either
 import Data.Fin.Set
 import Data.List
