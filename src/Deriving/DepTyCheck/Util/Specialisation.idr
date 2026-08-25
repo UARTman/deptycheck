@@ -145,7 +145,10 @@ processArgs :
   m (TTImp, List Arg, List $ Maybe TTImp)
 processArgs sig ga = bimap (reAppAny $ IVar EmptyFC sig.targetType.name) unGA <$> processArgs' sig 0 ga
 
--- From a set of given argument indices, convert a list of their values into a vector that can be fed to callGen
+-- Given a set of given argument indices, convert a list of their values into a vector that can be fed to callGen
+--
+-- The values should be listed for indices in ascending order
+-- (i.e. how said indices would be sorted if we called toList on the set)
 export
 formGivenVals : (s : SortedSet _) -> List TTImp -> Vect s.size TTImp
 formGivenVals a b = fgvImpl (Vect.fromList $ Prelude.toList a) b
@@ -184,17 +187,17 @@ allConstructorsVisible : Elaboration m => TypeInfo -> m Bool
 allConstructorsVisible ti = do
   all id <$> traverse (nameUnambigAndVis . name) ti.cons
 
-mkDPairHelper : Nat -> (Name -> TTImp) -> TTImp -> TTImp
-mkDPairHelper 0 _ t = t
-mkDPairHelper (S n) helper t = do
+mkDPairOfUnknowns : Nat -> (Name -> TTImp) -> TTImp -> TTImp
+mkDPairOfUnknowns 0 _ t = t
+mkDPairOfUnknowns (S n) helper t = do
   let nn = fromString $ "dph^\{show n}"
-  `(MkDPair ~(helper nn) ~(mkDPairHelper n helper t))
+  `(MkDPair ~(helper nn) ~(mkDPairOfUnknowns n helper t))
 
-dPairHelper : Nat -> TTImp
-dPairHelper 0 = `(?)
-dPairHelper (S n) = `(DPair ? $ \_ => ~(dPairHelper n))
+dPairOfUnknowns : Nat -> TTImp
+dPairOfUnknowns 0 = `(?)
+dPairOfUnknowns (S n) = `(DPair ? $ \_ => ~(dPairOfUnknowns n))
 
-inSameNS : Name -> Name -> Name
+inSameNS : (nsSource: Name) -> Name -> Name
 inSameNS (NS ns _) n = NS ns n
 inSameNS _ n = n
 
@@ -224,7 +227,8 @@ specialiseIfNeeded sig fuel givenParamValues = do
   let givenIdxVals = Prelude.toList sig.givenParams `zipV` givenParamValues
   let genArgs = mkArgs sig (withIndex sig.targetType.args) givenIdxVals
   -- Check if at least one `GenArg` can be specialised upon (i.e. is a type argument and has a non-passthrough given value)
-  -- We need to terminate when all givens are passthrough, because otherwise we'll be stuck endlessly performing identity specialisations of the same type
+  -- We need to terminate when all givens are passthrough, because otherwise we'll be stuck endlessly performing
+  -- identity specialisations of the same type
   False <- all id <$> traverse (.isPassthrough) genArgs
     | True => do
       logPoint DetailedDebug "deptycheck.util.specialisation" [sig]
@@ -285,8 +289,8 @@ specialiseIfNeeded sig fuel givenParamValues = do
     if generateds == 0
         then `(map (cast @{~(var $ inSameNS specTy.name "mToP")}) $ ~inv)
         else
-          `(the (Gen MaybeEmpty ~(dPairHelper generateds)) $ map (\invv =>
+          `(the (Gen MaybeEmpty ~(dPairOfUnknowns generateds)) $ map (\invv =>
             case invv of
-              ~(mkDPairHelper generateds bindVar (bindVar "inv")) =>
-                  ~(mkDPairHelper generateds var `(cast @{~(var $ inSameNS specTy.name "mToP")} inv))) ~inv)
+              ~(mkDPairOfUnknowns generateds bindVar (bindVar "inv")) =>
+                  ~(mkDPairOfUnknowns generateds var `(cast @{~(var $ inSameNS specTy.name "mToP")} inv))) ~inv)
   pure $ Just inv

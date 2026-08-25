@@ -4,9 +4,9 @@ module Deriving.DepTyCheck.Gen.ForAllNeededTypes.Impl
 import public Control.Monad.State
 
 import public Data.DPair
-import public Data.List.Set
 import public Data.List.Ex
 import public Data.List.Map
+import public Data.List.Set
 import public Data.SortedMap
 
 import public Decidable.Equality
