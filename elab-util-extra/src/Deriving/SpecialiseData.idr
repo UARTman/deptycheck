@@ -544,8 +544,7 @@ parameters (t : SpecTask)
                 {rfv=_} ta t.fullInvocation
     logPoint DetailedDebug "specialiseData.unifyCon" [t.polyTy, con] "Unifier task: \{show uniTask}"
     uniRes <- unify uniTask
-    logPoint DetailedDebug "specialiseData.unifyCon" [t.polyTy, con] "Unifier output: \{show uniRes}"
-    pure uniRes
+    logValue DetailedDebug "specialiseData.unifyCon" [t.polyTy, con] "Unifier output: \{show uniRes}" uniRes
 
   ---------------------------------
   --- SPECIFIED TYPE GENERATION ---

@@ -106,36 +106,42 @@ processArgs' sig k (x :: xs) = do
   pure (appArg x.arg aT :: recAA, l ++ l')
 
 processArg sig argIdx ga with (ga.given)
-  processArg sig argIdx ga | Nothing = do
-    logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "No given value, passing through"
-    pure $ singleArg argIdx ga
+  processArg sig argIdx ga | Nothing =
+    logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+      "No given value, passing through"
+      $ singleArg argIdx ga
   processArg sig argIdx ga | Just x = do
     let (appLhs, appTerms) = unAppAny x
     let IVar _ tyName = appLhs
-      | IPrimVal _ (PrT _) => do
-            logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "Given a primitive type invocation, specialising"
-            pure (x, [])
-      | _ => do
-        logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "Given value head is not a variable, passing through"
-        pure $ singleArg argIdx ga
+      | IPrimVal _ (PrT _) =>
+        logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+          "Given a primitive type invocation, specialising"
+          (x, [])
+      | _ =>
+        logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+          "Given value head is not a variable, passing through"
+          $ singleArg argIdx ga
     case lookupType tyName of
       Just tyInfo => do
         let (_ :: _) = appTerms
-          | [] => do
-            logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "Given a type invocation w/o arguments, specialising"
-            pure (x, [])
+          | [] =>
+            logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+              "Given a type invocation w/o arguments, specialising"
+              (x, [])
         let givens = map (uncurry MkGenArg) $ zip tyInfo.args $ popArgVals tyInfo.args (mkAllApps appTerms)
         logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga]
           "Given a type invocation, traversing arguments: \{show $ map (fromMaybe "" . name . arg) givens}"
         map (mapFst $ reAppAny appLhs) $ processArgs' sig argIdx $ takeWhile (.isGiven) givens
       Nothing => do
         if (snd (unPi ga.arg.type) == `(Type))
-          then do
-            logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "Given a non-global type expr, passing through"
-            pure $ singleArg argIdx ga
-          else do
-            logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga] "Given a non-type expr, passing through"
-            pure $ singleArg argIdx ga
+          then
+            logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+              "Given a non-global type expr, passing through"
+              $ singleArg argIdx ga
+          else
+            logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+              "Given a non-type expr, passing through"
+              $ singleArg argIdx ga
 
 processArgs :
   MonadLog m =>
@@ -215,14 +221,16 @@ specialiseIfNeeded sig fuel givenParamValues = do
   logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Checking specialisation need for \{show givenParamValues}..."
   -- Check if there are any given type args, if not return Nothing
   let True = any (\a => snd (unPi a.type) == `(Type)) $ index' sig.targetType.args <$> Prelude.toList sig.givenParams
-    | False => do
-      logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Not found any given type args, specialisation not needed."
-      pure Nothing
+    | False =>
+      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+        "Not found any given type args, specialisation not needed."
+        Nothing
   -- Check if all of the generated type's constructors are visible, if not return Nothing
   True <- allConstructorsVisible sig.targetType
-    | False => do
-      logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "\{sig.targetType.name} has invisible constructors, specialisation impossible."
-      pure Nothing
+    | False =>
+      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+        "\{sig.targetType.name} has invisible constructors, specialisation impossible."
+        Nothing
   -- Assemble the `GenArg`s from `GenSignature` and given values
   let givenIdxVals = Prelude.toList sig.givenParams `zipV` givenParamValues
   let genArgs = mkArgs sig (withIndex sig.targetType.args) givenIdxVals
@@ -230,10 +238,10 @@ specialiseIfNeeded sig fuel givenParamValues = do
   -- We need to terminate when all givens are passthrough, because otherwise we'll be stuck endlessly performing
   -- identity specialisations of the same type
   False <- all id <$> traverse (.isPassthrough) genArgs
-    | True => do
-      logPoint DetailedDebug "deptycheck.util.specialisation" [sig]
+    | True =>
+      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
         "Not found any type arguments that can be specialised upon, specialisation impossible."
-      pure Nothing
+        Nothing
   -- Generate specialisation rhs, arguments, and given values
   (lambdaRet, fvArgs, givenSubst) <- processArgs sig genArgs
   let preNorm = foldr lam lambdaRet fvArgs
@@ -265,14 +273,17 @@ specialiseIfNeeded sig fuel givenParamValues = do
           -- Declare derived type
           declare specDecls
           specTy <- getInfo' specName
-          logPoint Trace "deptycheck.util.specialisation" [sig] "Declared specialised type \{show specTy.name}: \{show lambdaRet}"
-          pure (specTy, [])
-        Just specTy => do
-          logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Found \{show specTy.name}"
-          pure (specTy, [])
-    Just specTy => do
-      logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Found \{show specTy.name}"
-      pure (specTy, [])
+          logValue Trace "deptycheck.util.specialisation" [sig]
+            "Declared specialised type \{show specTy.name}: \{show lambdaRet}"
+            (specTy, [])
+        Just specTy =>
+          logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+            "Found \{show specTy.name}"
+            (specTy, [])
+    Just specTy =>
+      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+        "Found \{show specTy.name}"
+        (specTy, [])
   -- Assert that all of the specialised type's arguments are named for the specialised generator's `GenSignature` (this property should always be true)
   let Yes stNamed = areAllTyArgsNamed specTy
     | No _ => fail "INTERNAL ERROR: Specialised type \{show specTy.name} does not have fully named arguments and constructors."
