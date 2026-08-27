@@ -343,8 +343,7 @@ unify' task = do
   let dg = subEmpties dg
   logPoint DetailedDebug "unifyWithCompiler" [] "DG after subEmpties: \{show dg}"
   solved <- solveDG dg
-  logPoint DetailedDebug "unifyWithCompiler" [] "Solved DG: \{show solved}"
-  pure solved
+  logValue DetailedDebug "unifyWithCompiler" [] "Solved DG: \{show solved}" solved
 
 ||| Run unification in a try block
 export
@@ -359,8 +358,7 @@ unifyWithCompiler task = do
   rr <- try ret err
   dg <- liftEither rr
   ur <- finalizeDG task dg
-  logPoint DetailedDebug "unifyWithCompiler" [] "Unification result: \{show ur}"
-  pure ur
+  logValue DetailedDebug "unifyWithCompiler" [] "Unification result: \{show ur}" ur
 
 ||| Run unification in a try block
 export
