@@ -20,13 +20,10 @@ import public Data.Hashable.Base
 %default total
 
 allQImpl : Monad m => NamesInfoInTypes => TTImp -> TTImp -> m TTImp
-allQImpl pi@(IPi _ _ _ _ _ _) r = pure r
-allQImpl app@(IApp _ _ _) r = do
-  let IApp _ procL _ = r
-    | _ => pure `(?)
-  case procL of
-    Implicit _ _ => pure `(?)
-    _ => pure r
+allQImpl (IPi {}) r = pure r
+allQImpl (IApp {}) (IApp _ (Implicit {}) _) = pure `(?)
+allQImpl (IApp {}) r@(IApp {}) = pure r
+allQImpl (IApp {}) _ = pure `(?)
 allQImpl v@(IVar _ n) _ =
   case lookupType n of
     Just _ => pure v
@@ -151,10 +148,10 @@ processArgs :
   m (TTImp, List Arg, List $ Maybe TTImp)
 processArgs sig ga = bimap (reAppAny $ IVar EmptyFC sig.targetType.name) unGA <$> processArgs' sig 0 ga
 
--- Given a set of given argument indices, convert a list of their values into a vector that can be fed to callGen
---
--- The values should be listed for indices in ascending order
--- (i.e. how said indices would be sorted if we called toList on the set)
+||| Given a set of given argument indices, convert a list of their values into a vector that can be fed to `callGen`
+|||
+||| The values should be listed for indices in ascending order
+||| (i.e. how these indices would be sorted if we called `toList` on the set)
 export
 formGivenVals : (s : SortedSet _) -> List TTImp -> Vect s.size TTImp
 formGivenVals a b = fgvImpl (Vect.fromList $ Prelude.toList a) b

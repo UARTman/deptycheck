@@ -166,7 +166,7 @@ printStmts fl $ NewF ([< a, b ] ==> maybeRet) body cont = do
   (nm ** _) <- genNewName fl nameGen _ _ names
   rest <- printStmts @{NewFun nm {isInfix} @{names}} fl cont
   let infixAwareName : Doc opts = if isInfix then "(" <+> line nm <+> ")" else line nm
-  let processedInputTypes : Doc opts = hsep $ (toList [< a, b ]) <&> (\ty => printTy ty <++> "->")
+  let processedInputTypes : Doc opts = hsep $ [a, b] <&> (\ty => printTy ty <++> "->")
   let processedOutputType = "IO" <++> printMaybeTy maybeRet
   let idrisTypeSignature = processedInputTypes <++> processedOutputType
   (namesInside, funArgs) <- newVars fl alphaNames [< a, b ] (JustNew @{names} nm)

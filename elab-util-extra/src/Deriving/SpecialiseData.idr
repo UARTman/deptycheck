@@ -206,13 +206,13 @@ makeTypeArgM0 a = { count := if a.type == `(Type) then M0 else a.count } a
 
 ||| A tuple value of multiple repeating expressions
 tupleOfN : Nat -> TTImp -> TTImp
-tupleOfN 0 _ = `(Unit)
+tupleOfN 0 _ = `(MkUnit)
 tupleOfN 1 t = t
 tupleOfN (S n) t = `(MkPair ~t ~(tupleOfN n t))
 
 ||| Assemble a TTImp of a tuple from a list of `TTImp`s
 tupleOf : List TTImp -> TTImp
-tupleOf [] = `(())
+tupleOf [] = `(MkUnit)
 tupleOf [x] = x
 tupleOf (x :: xs) = `(MkPair ~x ~(tupleOf xs))
 
