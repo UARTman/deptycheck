@@ -1,17 +1,17 @@
 1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> {auto conArg : ((arg : Fuel) -> Gen MaybeEmpty String)} -> Gen MaybeEmpty X
 LOG deptycheck.derive.least-effort:7: DerivedGen.X[] MkX - used final order: [#0]
-LOG deptycheck.util.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^17089122808763292221.Either^17089122808763292221: Prelude.Types.Either Prelude.Types.Nat (DerivedGen.Y (Prelude.Types.Either (Data.Fin.Fin lam^0) String))
+LOG deptycheck.derive.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^17089122808763292221.Either^17089122808763292221: Prelude.Types.Either Prelude.Types.Nat (DerivedGen.Y (Prelude.Types.Either (Data.Fin.Fin lam^0) String))
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^17089122808763292221.Either^17089122808763292221[0(fv^Either^17089122808763292221.Either^17089122808763292221^lam^0)] Left - used final order: [#0 (x)]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^17089122808763292221.Either^17089122808763292221[0(fv^Either^17089122808763292221.Either^17089122808763292221^lam^0)] Right - used final order: [#1 (x)]
-LOG deptycheck.util.specialisation:10: DerivedGen.Y[0] Declared specialised type DerivedGen.Y^7167106520753982886.Y^7167106520753982886: DerivedGen.Y (Prelude.Types.Either (Data.Fin.Fin lam^0) String)
+LOG deptycheck.derive.specialisation:10: DerivedGen.Y[0] Declared specialised type DerivedGen.Y^7167106520753982886.Y^7167106520753982886: DerivedGen.Y (Prelude.Types.Either (Data.Fin.Fin lam^0) String)
 LOG deptycheck.derive.least-effort:7: Prelude.Types.Nat[] Z - used final order: []
 LOG deptycheck.derive.least-effort:7: Prelude.Types.Nat[] S - used final order: [#0]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Y^7167106520753982886.Y^7167106520753982886[0(fv^Y^7167106520753982886.Y^7167106520753982886^lam^0)] MkY - used final order: [#1]
-LOG deptycheck.util.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^5595291053177582713.Either^5595291053177582713: Prelude.Types.Either Prelude.Types.Nat (Prelude.Types.Either (Data.Fin.Fin lam^0) String)
+LOG deptycheck.derive.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^5595291053177582713.Either^5595291053177582713: Prelude.Types.Either Prelude.Types.Nat (Prelude.Types.Either (Data.Fin.Fin lam^0) String)
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^5595291053177582713.Either^5595291053177582713[0(fv^Either^5595291053177582713.Either^5595291053177582713^lam^0)] Left - used final order: [#0 (x)]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^5595291053177582713.Either^5595291053177582713[0(fv^Either^5595291053177582713.Either^5595291053177582713^lam^0)] Right - used final order: [#1 (x)]
-LOG deptycheck.util.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^13748098436294604892.Either^13748098436294604892: Prelude.Types.Either (Data.Fin.Fin lam^0) String
+LOG deptycheck.derive.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^13748098436294604892.Either^13748098436294604892: Prelude.Types.Either (Data.Fin.Fin lam^0) String
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^13748098436294604892.Either^13748098436294604892[0(fv^Either^13748098436294604892.Either^13748098436294604892^lam^0)] Left - used final order: [#1 (x)]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^13748098436294604892.Either^13748098436294604892[0(fv^Either^13748098436294604892.Either^13748098436294604892^lam^0)] Right - used final order: [#0 (x)]
 LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FZ - used final order: []

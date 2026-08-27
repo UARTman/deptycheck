@@ -1,14 +1,14 @@
 1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> Gen MaybeEmpty X
 LOG deptycheck.derive.least-effort:7: DerivedGen.X[] MkX - used final order: [#0]
-LOG deptycheck.util.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^4289176107705670177.Either^4289176107705670177: Prelude.Types.Either Prelude.Types.Nat (DerivedGen.Y Prelude.Types.Nat)
+LOG deptycheck.derive.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^4289176107705670177.Either^4289176107705670177: Prelude.Types.Either Prelude.Types.Nat (DerivedGen.Y Prelude.Types.Nat)
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^4289176107705670177.Either^4289176107705670177[] Left - used final order: [#0 (x)]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^4289176107705670177.Either^4289176107705670177[] Right - used final order: [#0 (x)]
-LOG deptycheck.util.specialisation:10: DerivedGen.Y[0] Declared specialised type DerivedGen.Y^11712255676025100806.Y^11712255676025100806: DerivedGen.Y Prelude.Types.Nat
+LOG deptycheck.derive.specialisation:10: DerivedGen.Y[0] Declared specialised type DerivedGen.Y^11712255676025100806.Y^11712255676025100806: DerivedGen.Y Prelude.Types.Nat
 LOG deptycheck.derive.least-effort:7: Prelude.Types.Nat[] Z - used final order: []
 LOG deptycheck.derive.least-effort:7: Prelude.Types.Nat[] S - used final order: [#0]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Y^11712255676025100806.Y^11712255676025100806[] MkY - used final order: [#0]
-LOG deptycheck.util.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^13682636983817606971.Either^13682636983817606971: Prelude.Types.Either Prelude.Types.Nat Prelude.Types.Nat
+LOG deptycheck.derive.specialisation:10: Prelude.Types.Either[0(a), 1(b)] Declared specialised type DerivedGen.Either^13682636983817606971.Either^13682636983817606971: Prelude.Types.Either Prelude.Types.Nat Prelude.Types.Nat
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^13682636983817606971.Either^13682636983817606971[] Left - used final order: [#0 (x)]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Either^13682636983817606971.Either^13682636983817606971[] Right - used final order: [#0 (x)]
     MkArg MW ExplicitArg (Just "^outmost-fuel^") (var "Data.Fuel.Fuel")

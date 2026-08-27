@@ -1,8 +1,8 @@
 1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> {auto conArg : ((arg : Fuel) -> Gen MaybeEmpty String)} -> Gen MaybeEmpty X
 LOG deptycheck.derive.least-effort:7: DerivedGen.X[] MkX - used final order: [#0, #1]
-LOG deptycheck.util.specialisation:10: Prelude.Basics.List[0] Declared specialised type DerivedGen.List^8984676908526435328.List^8984676908526435328: Prelude.Basics.List String
-LOG deptycheck.util.specialisation:10: Prelude.Basics.List[0] Declared specialised type DerivedGen.List^4779069909474151191.List^4779069909474151191: Prelude.Basics.List Prelude.Types.Nat
+LOG deptycheck.derive.specialisation:10: Prelude.Basics.List[0] Declared specialised type DerivedGen.List^8984676908526435328.List^8984676908526435328: Prelude.Basics.List String
+LOG deptycheck.derive.specialisation:10: Prelude.Basics.List[0] Declared specialised type DerivedGen.List^4779069909474151191.List^4779069909474151191: Prelude.Basics.List Prelude.Types.Nat
 LOG deptycheck.derive.least-effort:7: DerivedGen.List^4779069909474151191.List^4779069909474151191[] Nil - used final order: []
 LOG deptycheck.derive.least-effort:7: DerivedGen.List^4779069909474151191.List^4779069909474151191[] (::) - used final order: [#0, #1]
 LOG deptycheck.derive.least-effort:7: DerivedGen.List^8984676908526435328.List^8984676908526435328[] Nil - used final order: []

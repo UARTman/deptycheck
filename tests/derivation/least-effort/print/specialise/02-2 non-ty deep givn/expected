@@ -1,7 +1,7 @@
 1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> (n : Nat) -> Gen MaybeEmpty (X n)
 LOG deptycheck.derive.least-effort:7: DerivedGen.X[0] MkX - used final order: [#1]
-LOG deptycheck.util.specialisation:10: Prelude.Basics.List[0] Declared specialised type DerivedGen.List^12757670414100080037.List^12757670414100080037: Prelude.Basics.List (Data.Fin.Fin lam^0)
+LOG deptycheck.derive.specialisation:10: Prelude.Basics.List[0] Declared specialised type DerivedGen.List^12757670414100080037.List^12757670414100080037: Prelude.Basics.List (Data.Fin.Fin lam^0)
 LOG deptycheck.derive.least-effort:7: DerivedGen.List^12757670414100080037.List^12757670414100080037[0(fv^List^12757670414100080037.List^12757670414100080037^lam^0)] Nil - used final order: []
 LOG deptycheck.derive.least-effort:7: DerivedGen.List^12757670414100080037.List^12757670414100080037[0(fv^List^12757670414100080037.List^12757670414100080037^lam^0)] (::) - used final order: [#1, #2]
 LOG deptycheck.derive.least-effort:7: Data.Fin.Fin[0(n)] FZ - used final order: []

@@ -1,7 +1,7 @@
 1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> {auto conArg : ((arg : Fuel) -> Gen MaybeEmpty String)} -> (n : Nat) -> Gen MaybeEmpty (X n)
 LOG deptycheck.derive.least-effort:7: DerivedGen.X[0] MkX - used final order: [#1]
-LOG deptycheck.util.specialisation:10: Data.Vect.Vect[0(len), 1(elem)] Declared specialised type DerivedGen.Vect^120651999565177027.Vect^120651999565177027: Data.Vect.Vect lam^0 String
+LOG deptycheck.derive.specialisation:10: Data.Vect.Vect[0(len), 1(elem)] Declared specialised type DerivedGen.Vect^120651999565177027.Vect^120651999565177027: Data.Vect.Vect lam^0 String
 LOG deptycheck.derive.least-effort:7: DerivedGen.Vect^120651999565177027.Vect^120651999565177027[0(fv^Vect^120651999565177027.Vect^120651999565177027^lam^0)] Nil - used final order: []
 LOG deptycheck.derive.least-effort:7: DerivedGen.Vect^120651999565177027.Vect^120651999565177027[0(fv^Vect^120651999565177027.Vect^120651999565177027^lam^0)] (::) - used final order: [#2 (xs), #1 (x)]
     MkArg MW ExplicitArg (Just "^outmost-fuel^") (var "Data.Fuel.Fuel")

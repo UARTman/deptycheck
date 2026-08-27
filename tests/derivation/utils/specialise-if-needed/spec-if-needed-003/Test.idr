@@ -5,7 +5,7 @@ import Shared
 
 %language ElabReflection
 
-%logging "deptycheck.util.specialisation" 20
+%logging "deptycheck.derive.specialisation" 20
 
 
 data X : (t : Type) -> (t -> Type) -> Type where

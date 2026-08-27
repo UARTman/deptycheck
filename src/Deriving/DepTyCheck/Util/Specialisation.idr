@@ -104,39 +104,39 @@ processArgs' sig k (x :: xs) = do
 
 processArg sig argIdx ga with (ga.given)
   processArg sig argIdx ga | Nothing =
-    logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+    logValue DetailedDebug "deptycheck.derive.specialisation" [sig, ga]
       "No given value, passing through"
       $ singleArg argIdx ga
   processArg sig argIdx ga | Just x = do
     let (appLhs, appTerms) = unAppAny x
     let IVar _ tyName = appLhs
       | IPrimVal _ (PrT _) =>
-        logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+        logValue DetailedDebug "deptycheck.derive.specialisation" [sig, ga]
           "Given a primitive type invocation, specialising"
           (x, [])
       | _ =>
-        logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+        logValue DetailedDebug "deptycheck.derive.specialisation" [sig, ga]
           "Given value head is not a variable, passing through"
           $ singleArg argIdx ga
     case lookupType tyName of
       Just tyInfo => do
         let (_ :: _) = appTerms
           | [] =>
-            logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+            logValue DetailedDebug "deptycheck.derive.specialisation" [sig, ga]
               "Given a type invocation w/o arguments, specialising"
               (x, [])
         let givens = map (uncurry MkGenArg) $ zip tyInfo.args $ popArgVals tyInfo.args (mkAllApps appTerms)
-        logPoint DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+        logPoint DetailedDebug "deptycheck.derive.specialisation" [sig, ga]
           "Given a type invocation, traversing arguments: \{show $ map (fromMaybe "" . name . arg) givens}"
         map (mapFst $ reAppAny appLhs) $ processArgs' sig argIdx $ takeWhile (.isGiven) givens
       Nothing => do
         if (snd (unPi ga.arg.type) == `(Type))
           then
-            logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+            logValue DetailedDebug "deptycheck.derive.specialisation" [sig, ga]
               "Given a non-global type expr, passing through"
               $ singleArg argIdx ga
           else
-            logValue DetailedDebug "deptycheck.util.specialisation" [sig, ga]
+            logValue DetailedDebug "deptycheck.derive.specialisation" [sig, ga]
               "Given a non-type expr, passing through"
               $ singleArg argIdx ga
 
@@ -215,17 +215,17 @@ specialiseIfNeeded :
   Vect sig.givenParams.size TTImp ->
   m $ Maybe TTImp
 specialiseIfNeeded sig fuel givenParamValues = do
-  logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Checking specialisation need for \{show givenParamValues}..."
+  logPoint DetailedDebug "deptycheck.derive.specialisation" [sig] "Checking specialisation need for \{show givenParamValues}..."
   -- Check if there are any given type args, if not return Nothing
   let True = any (\a => snd (unPi a.type) == `(Type)) $ index' sig.targetType.args <$> Prelude.toList sig.givenParams
     | False =>
-      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+      logValue DetailedDebug "deptycheck.derive.specialisation" [sig]
         "Not found any given type args, specialisation not needed."
         Nothing
   -- Check if all of the generated type's constructors are visible, if not return Nothing
   True <- allConstructorsVisible sig.targetType
     | False =>
-      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+      logValue DetailedDebug "deptycheck.derive.specialisation" [sig]
         "\{sig.targetType.name} has invisible constructors, specialisation impossible."
         Nothing
   -- Assemble the `GenArg`s from `GenSignature` and given values
@@ -236,20 +236,20 @@ specialiseIfNeeded sig fuel givenParamValues = do
   -- identity specialisations of the same type
   False <- all id <$> traverse (.isPassthrough) genArgs
     | True =>
-      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+      logValue DetailedDebug "deptycheck.derive.specialisation" [sig]
         "Not found any type arguments that can be specialised upon, specialisation impossible."
         Nothing
   -- Generate specialisation rhs, arguments, and given values
   (lambdaRet, fvArgs, givenSubst) <- processArgs sig genArgs
   let preNorm = foldr lam lambdaRet fvArgs
-  logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Task before normalisation: \{show preNorm}"
+  logPoint DetailedDebug "deptycheck.derive.specialisation" [sig] "Task before normalisation: \{show preNorm}"
   -- Normalise the specialisation lambda
   (lambdaTy, lambdaBody) <- normaliseTask fvArgs lambdaRet
-  logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "NormaliseTask returned: lambdaTy = \{show lambdaTy};"
-  logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "                        lambdaBody = \{show lambdaBody};"
+  logPoint DetailedDebug "deptycheck.derive.specialisation" [sig] "NormaliseTask returned: lambdaTy = \{show lambdaTy};"
+  logPoint DetailedDebug "deptycheck.derive.specialisation" [sig] "                        lambdaBody = \{show lambdaBody};"
   -- Generate specialised type name
   specName <- specTaskToName lambdaBody
-  logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Specialised type name: \{show specName}"
+  logPoint DetailedDebug "deptycheck.derive.specialisation" [sig] "Specialised type name: \{show specName}"
   -- Check if `NamesInfoInTypes` contains specialised type
   (specTy, specDecls) : (TypeInfo, List Decl) <- case lookupType specName of
     -- If not, try looking it up via elaborator
@@ -258,7 +258,7 @@ specialiseIfNeeded sig fuel givenParamValues = do
       case info of
         Nothing => do
         -- If not found at all, derive specialised type
-          logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Specialised type not found, deriving..."
+          logPoint DetailedDebug "deptycheck.derive.specialisation" [sig] "Specialised type not found, deriving..."
           thisNS <- do
             NS nsn _ <- inCurrentNS ""
             | _ => fail "Internal error: inCurrentNS did not return NS"
@@ -266,19 +266,19 @@ specialiseIfNeeded sig fuel givenParamValues = do
           Right (specTy, specDecls) <- runEitherT {m} {e=SpecialisationError} $
               specialiseDataRaw {nsProvider = inNS thisNS} specName lambdaTy lambdaBody
             | Left err => fail "INTERNAL ERROR: Specialisation \{show lambdaBody} failed with error \{show err}."
-          logPoint DetailedDebug "deptycheck.util.specialisation" [sig] "Derived \{show specTy.name}"
+          logPoint DetailedDebug "deptycheck.derive.specialisation" [sig] "Derived \{show specTy.name}"
           -- Declare derived type
           declare specDecls
           specTy <- getInfo' specName
-          logValue Trace "deptycheck.util.specialisation" [sig]
+          logValue Trace "deptycheck.derive.specialisation" [sig]
             "Declared specialised type \{show specTy.name}: \{show lambdaRet}"
             (specTy, [])
         Just specTy =>
-          logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+          logValue DetailedDebug "deptycheck.derive.specialisation" [sig]
             "Found \{show specTy.name}"
             (specTy, [])
     Just specTy =>
-      logValue DetailedDebug "deptycheck.util.specialisation" [sig]
+      logValue DetailedDebug "deptycheck.derive.specialisation" [sig]
         "Found \{show specTy.name}"
         (specTy, [])
   -- Assert that all of the specialised type's arguments are named for the specialised generator's `GenSignature` (this property should always be true)

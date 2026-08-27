@@ -1,11 +1,11 @@
 1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> (r : Nat) -> (t : Bool) -> Gen MaybeEmpty (a : Regs r ** SimpleExpr a t)
 LOG deptycheck.derive.least-effort:7: DerivedGen.SimpleExpr[0(r), 2] Read - used final order: [#4]
-LOG deptycheck.util.specialisation:10: Data.Vect.AtIndex.AtIndex[0(type), 1(n), 4(x)] Declared specialised type DerivedGen.AtIndex^2737362274073714525.AtIndex^2737362274073714525: Data.Vect.AtIndex.AtIndex {type = Prelude.Types.Maybe Prelude.Basics.Bool} {n = lam^0} lam^1 lam^2 lam^3
+LOG deptycheck.derive.specialisation:10: Data.Vect.AtIndex.AtIndex[0(type), 1(n), 4(x)] Declared specialised type DerivedGen.AtIndex^2737362274073714525.AtIndex^2737362274073714525: Data.Vect.AtIndex.AtIndex {type = Prelude.Types.Maybe Prelude.Basics.Bool} {n = lam^0} lam^1 lam^2 lam^3
 LOG deptycheck.derive.least-effort:7: DerivedGen.AtIndex^2737362274073714525.AtIndex^2737362274073714525[0(fv^AtIndex^2737362274073714525.AtIndex^2737362274073714525^lam^0), 3(fv^AtIndex^2737362274073714525.AtIndex^2737362274073714525^lam^3)] Here - used final order: [#2 (xs)]
-LOG deptycheck.util.specialisation:10: Data.Vect.Vect[0(len), 1(elem)] Declared specialised type DerivedGen.Vect^15780912604163783186.Vect^15780912604163783186: Data.Vect.Vect lam^0 (Prelude.Types.Maybe Prelude.Basics.Bool)
+LOG deptycheck.derive.specialisation:10: Data.Vect.Vect[0(len), 1(elem)] Declared specialised type DerivedGen.Vect^15780912604163783186.Vect^15780912604163783186: Data.Vect.Vect lam^0 (Prelude.Types.Maybe Prelude.Basics.Bool)
 LOG deptycheck.derive.least-effort:7: DerivedGen.AtIndex^2737362274073714525.AtIndex^2737362274073714525[0(fv^AtIndex^2737362274073714525.AtIndex^2737362274073714525^lam^0), 3(fv^AtIndex^2737362274073714525.AtIndex^2737362274073714525^lam^3)] There - used final order: [#5 (later), #1 (y)]
-LOG deptycheck.util.specialisation:10: Prelude.Types.Maybe[0(ty)] Declared specialised type DerivedGen.Maybe^2151327891283438926.Maybe^2151327891283438926: Prelude.Types.Maybe Prelude.Basics.Bool
+LOG deptycheck.derive.specialisation:10: Prelude.Types.Maybe[0(ty)] Declared specialised type DerivedGen.Maybe^2151327891283438926.Maybe^2151327891283438926: Prelude.Types.Maybe Prelude.Basics.Bool
 LOG deptycheck.derive.least-effort:7: DerivedGen.Maybe^2151327891283438926.Maybe^2151327891283438926[] Nothing - used final order: []
 LOG deptycheck.derive.least-effort:7: DerivedGen.Maybe^2151327891283438926.Maybe^2151327891283438926[] Just - used final order: [#0 (x)]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Vect^15780912604163783186.Vect^15780912604163783186[0(fv^Vect^15780912604163783186.Vect^15780912604163783186^lam^0)] Nil - used final order: []
