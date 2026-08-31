@@ -53,6 +53,7 @@ for item in target_path.rglob("*"):
         (item / "AlternativeCore.idr").unlink(missing_ok=True)
         (item / "RunDerivedGen.idr").unlink(missing_ok=True)
         (item / "Infra.idr").unlink(missing_ok=True)
+        (item / "DistrCheckCommon.idr").unlink(missing_ok=True)
         expected = item / "expected"
         if expected.exists():
             content = ""
