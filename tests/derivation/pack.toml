@@ -1,0 +1,4 @@
+[custom.all.derive-test-shared]
+type = "local"
+path = "_common"
+ipkg = "derive-shared.ipkg"

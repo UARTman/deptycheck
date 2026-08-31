@@ -3,3 +3,4 @@ package derive-test
 opts = "--no-color --console-width 0"
 
 depends = deptycheck
+        , derive-test-shared
