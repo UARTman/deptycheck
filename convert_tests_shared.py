@@ -43,10 +43,10 @@ TEST_ONLY = """1/1: Building Test (Test.idr)
 """
 
 
-def patch_expected(content: str) -> str:
+def patch_expected(s: str) -> str:
     """Remove references to deleted symlinks from golden test expected file"""
     return (
-        content.replace(AC_ONLY, DG_ONLY)
+        s.replace(AC_ONLY, DG_ONLY)
         .replace(RDG_ONLY, DG_ONLY)
         .replace(AC_RDG, DG_ONLY)
         .replace(INFRA_CSC, CSC_ONLY)
