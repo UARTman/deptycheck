@@ -1,8 +1,12 @@
 module ConsApps
 
+import Infra
+
 import Language.Reflection.Compat
 
 %default total
+
+%language ElabReflection
 
 private infix 1 @@@
 
@@ -23,3 +27,5 @@ consApps = pure
   , `(Vect (S n) (Either a a)) @@@ ["n", "a", "b"]
   , `(Vect (S $ S n) (Either a (X a a))) @@@ ["n", "a", "b"]
   ]
+
+%runElab consApps >>= traverse_ (uncurry printDeepConsApp)

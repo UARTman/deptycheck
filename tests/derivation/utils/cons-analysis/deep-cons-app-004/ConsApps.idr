@@ -1,8 +1,12 @@
 module ConsApps
 
+import Infra
+
 import Language.Reflection.Compat
 
 %default total
+
+%language ElabReflection
 
 private infix 1 @@@
 
@@ -33,3 +37,5 @@ consApps = pure
   , `(XX $ Left $ a `MC` b `MC` c `MC` MM) @@@ ["n", "a", "b", "c"]
   , `(XX $ Left $ a `MC` Z `MC` c `MC` MM) @@@ ["n", "a", "b", "c"]
   ]
+
+%runElab consApps >>= traverse_ (uncurry printDeepConsApp)

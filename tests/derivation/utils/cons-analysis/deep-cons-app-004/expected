@@ -1,5 +1,4 @@
-1/2: Building ConsApps (ConsApps.idr)
-2/2: Building Infra (Infra.idr)
+1/1: Building ConsApps (ConsApps.idr)
 LOG deptycheck.deep-cons-app:0: 
 LOG deptycheck.deep-cons-app:0: given free names:    []
 LOG deptycheck.deep-cons-app:0: original expression: XX (Right Unit)

@@ -23,3 +23,5 @@ consApps = join <$> sequence
   , rhsConsOf `{Builtin.Equal}
   , rhsConsOf `{EqExp}
   ]
+
+%runElab consApps >>= traverse_ (uncurry printDeepConsApp)
