@@ -58,6 +58,7 @@ def patch_expected(s: str) -> str:
         .replace(CA_INFRA, CA_ONLY)
     )
 
+
 CONS_APPS_BEFORE = """module ConsApps
 
 import Language.Reflection.Compat
@@ -81,6 +82,7 @@ CONS_APPS_DERIVE = """
 %runElab consApps >>= traverse_ (uncurry printDeepConsApp)
 """
 
+
 def patch_cons_apps(s: str) -> str:
     """Patch ConsApps.idr"""
     s_new = s.replace(CONS_APPS_BEFORE, CONS_APPS_AFTER)
@@ -88,7 +90,9 @@ def patch_cons_apps(s: str) -> str:
         s_new = s_new + CONS_APPS_DERIVE
     return s_new
 
+
 def patch_file(fl: Path, patch_fn: Callable[[str], str]):
+    """Patch a file with a patcher function"""
     if fl.exists():
         content = ""
         with fl.open("r") as f:
@@ -97,8 +101,14 @@ def patch_file(fl: Path, patch_fn: Callable[[str], str]):
         with fl.open("w") as f:
             f.write(content)
 
+
 for item in target_path.rglob("*"):
-    if item.is_dir() and item.name != "_shared" and item.name != "_common" and item.name != "_common-deep-cons-app":
+    if (
+        item.is_dir()
+        and item.name != "_shared"
+        and item.name != "_common"
+        and item.name != "_common-deep-cons-app"
+    ):
         print(f"Directory found: {item}")
         (item / "AlternativeCore.idr").unlink(missing_ok=True)
         (item / "RunDerivedGen.idr").unlink(missing_ok=True)
@@ -107,4 +117,3 @@ for item in target_path.rglob("*"):
         (item / "Shared.idr").unlink(missing_ok=True)
         patch_file(item / "expected", patch_expected)
         patch_file(item / "ConsApps.idr", patch_cons_apps)
-
