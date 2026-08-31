@@ -1,0 +1,4 @@
+[custom.all.sin-common]
+type = "local"
+path = "_common"
+ipkg = "test-common.ipkg"
