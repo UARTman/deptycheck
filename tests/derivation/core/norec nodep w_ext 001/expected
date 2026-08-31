@@ -1,5 +1,4 @@
-1/2: Building RunDerivedGen (RunDerivedGen.idr)
-2/2: Building DerivedGen (DerivedGen.idr)
+1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.type:2: DerivedGen.X[] ___ start ___
 LOG deptycheck.derive.consBody:2: DerivedGen.X[] MkX __ start __
 LOG deptycheck.derive.closuring.external:5: String[] is used as an external generator
