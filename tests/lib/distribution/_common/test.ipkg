@@ -2,4 +2,6 @@ package test
 
 main = CheckDistribution
 
-depends = deptycheck, summary-stat
+depends = deptycheck
+        , summary-stat
+        , test-distribution-common
