@@ -36,6 +36,12 @@ INFRA_CSC = """1/2: Building Infra (Infra.idr)
 CSC_ONLY = """1/1: Building CanonicSigCheck (CanonicSigCheck.idr)
 """
 
+SHARED_TEST = """1/2: Building Shared (Shared.idr)
+2/2: Building Test (Test.idr)"""
+
+TEST_ONLY = """1/1: Building Test (Test.idr)
+"""
+
 
 def patch_expected(content: str) -> str:
     """Remove references to deleted symlinks from golden test expected file"""
@@ -44,6 +50,7 @@ def patch_expected(content: str) -> str:
         .replace(RDG_ONLY, DG_ONLY)
         .replace(AC_RDG, DG_ONLY)
         .replace(INFRA_CSC, CSC_ONLY)
+        .replace(SHARED_TEST, TEST_ONLY)
     )
 
 
@@ -54,6 +61,7 @@ for item in target_path.rglob("*"):
         (item / "RunDerivedGen.idr").unlink(missing_ok=True)
         (item / "Infra.idr").unlink(missing_ok=True)
         (item / "DistrCheckCommon.idr").unlink(missing_ok=True)
+        (item / "Shared.idr").unlink(missing_ok=True)
         expected = item / "expected"
         if expected.exists():
             content = ""
