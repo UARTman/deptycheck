@@ -39,8 +39,7 @@ CSC_ONLY = """1/1: Building CanonicSigCheck (CanonicSigCheck.idr)
 SHARED_TEST = """1/2: Building Shared (Shared.idr)
 2/2: Building Test (Test.idr)"""
 
-TEST_ONLY = """1/1: Building Test (Test.idr)
-"""
+TEST_ONLY = """1/1: Building Test (Test.idr)"""
 
 
 def patch_expected(s: str) -> str:
