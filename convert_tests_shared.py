@@ -4,8 +4,8 @@ This script automatically removes symlinks to shared test code that is now
 managed by pack. It's left in the git history for posterity.
 """
 
-from collections.abc import Callable
 import sys
+from collections.abc import Callable
 from pathlib import Path
 
 in_path = sys.argv[1]
