@@ -1,5 +1,4 @@
-1/2: Building AlternativeCore (AlternativeCore.idr)
-2/2: Building DerivedGen (DerivedGen.idr)
+1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.print:5: type: (arg : Fuel) -> {auto conArg : ((arg : Fuel) -> Gen MaybeEmpty String)} -> Gen MaybeEmpty XS
     MkArg MW ExplicitArg (Just "^outmost-fuel^") (var "Data.Fuel.Fuel")
 .=> MkArg

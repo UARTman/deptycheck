@@ -1,0 +1,4 @@
+[custom.all.canonic-sig-shared]
+type = "local"
+path = "_common"
+ipkg = "canonic-sig-shared.ipkg"

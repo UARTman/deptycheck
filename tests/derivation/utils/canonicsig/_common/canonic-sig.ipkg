@@ -2,4 +2,5 @@ package canonic-sig
 
 opts = "--no-color --console-width 0"
 
-depends = deptycheck
+depends = canonic-sig-shared
+        , deptycheck
