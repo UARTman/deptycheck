@@ -8,6 +8,9 @@ import Language.Reflection.Compat
 
 %language ElabReflection
 
+%hide Data.List.Quantifiers.Right
+%hide Data.List.Quantifiers.Left
+
 private infix 1 @@@
 
 (@@@) : b -> a -> (a, b)

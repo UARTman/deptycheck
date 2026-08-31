@@ -72,10 +72,14 @@ import Language.Reflection.Compat
 
 %default total
 
-%language ElabReflection"""
+%language ElabReflection
+
+%hide Data.List.Quantifiers.Right
+%hide Data.List.Quantifiers.Left"""
 
 CONS_APPS_DERIVE = """
-%runElab consApps >>= traverse_ (uncurry printDeepConsApp)"""
+%runElab consApps >>= traverse_ (uncurry printDeepConsApp)
+"""
 
 def patch_cons_apps(s: str) -> str:
     """Patch ConsApps.idr"""
