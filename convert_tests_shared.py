@@ -1,3 +1,9 @@
+"""convert_tests_shared.py
+
+This script automatically removes symlinks to shared test code that is now
+managed by pack. It's left in the git history for posterity.
+"""
+
 import sys
 from pathlib import Path
 
@@ -6,37 +12,39 @@ in_path = sys.argv[1]
 # Replace with your actual directory path
 target_path = Path(in_path)
 
-ac_only = """1/2: Building AlternativeCore (AlternativeCore.idr)
+AC_ONLY = """1/2: Building AlternativeCore (AlternativeCore.idr)
 2/2: Building DerivedGen (DerivedGen.idr)
 """
 
-rdg_only = """1/2: Building RunDerivedGen (RunDerivedGen.idr)
+RDG_ONLY = """1/2: Building RunDerivedGen (RunDerivedGen.idr)
 2/2: Building DerivedGen (DerivedGen.idr)
 """
 
 
-ac_rdg = """1/3: Building AlternativeCore (AlternativeCore.idr)
+AC_RDG = """1/3: Building AlternativeCore (AlternativeCore.idr)
 2/3: Building RunDerivedGen (RunDerivedGen.idr)
 3/3: Building DerivedGen (DerivedGen.idr)
 """
 
-dg_only = """1/1: Building DerivedGen (DerivedGen.idr)
+DG_ONLY = """1/1: Building DerivedGen (DerivedGen.idr)
 """
 
-infra = """1/2: Building Infra (Infra.idr)
+INFRA_CSC = """1/2: Building Infra (Infra.idr)
 2/2: Building CanonicSigCheck (CanonicSigCheck.idr)
 """
 
-csc_only = """1/1: Building CanonicSigCheck (CanonicSigCheck.idr)
+CSC_ONLY = """1/1: Building CanonicSigCheck (CanonicSigCheck.idr)
 """
 
 
 def patch_expected(content: str) -> str:
-    content = content.replace(ac_only, dg_only)
-    content = content.replace(rdg_only, dg_only)
-    content = content.replace(ac_rdg, dg_only)
-    content = content.replace(infra, csc_only)
-    return content
+    """Remove references to deleted symlinks from golden test expected file"""
+    return (
+        content.replace(AC_ONLY, DG_ONLY)
+        .replace(RDG_ONLY, DG_ONLY)
+        .replace(AC_RDG, DG_ONLY)
+        .replace(INFRA_CSC, CSC_ONLY)
+    )
 
 
 for item in target_path.rglob("*"):
