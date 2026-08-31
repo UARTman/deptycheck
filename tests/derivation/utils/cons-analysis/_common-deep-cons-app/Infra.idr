@@ -1,19 +1,18 @@
 module Infra
 
-import public ConsApps
-
-import Control.Monad.Identity
+import public Control.Monad.Identity
 import public Control.Monad.Writer
 
-import Data.Alternative
+import public Data.Alternative
 
-import Deriving.DepTyCheck.Util.DeepConsApp
+import public Deriving.DepTyCheck.Util.DeepConsApp
 
 %language ElabReflection
 
 %hide Data.List.Quantifiers.Right
 %hide Data.List.Quantifiers.Left
 
+public export
 printDeepConsApp : List Name -> TTImp -> Elab Unit
 printDeepConsApp freeNames tyExpr = do
   _ <- getNamesInfoInTypes' tyExpr
@@ -34,5 +33,3 @@ printDeepConsApp freeNames tyExpr = do
   logMsg         "deptycheck.deep-cons-app" 0 "applied names:   \{show appliedNames}"
   let bindExpr = bindExprF $ \idx => bindVar $ UN $ Basic $ show (index idx appliedNames) ++ show idx
   logSugaredTerm "deptycheck.deep-cons-app" 0 "bind expression" bindExpr
-
-%runElab consApps >>= traverse_ (uncurry printDeepConsApp)
