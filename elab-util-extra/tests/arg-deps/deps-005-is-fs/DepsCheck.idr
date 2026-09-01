@@ -2,7 +2,11 @@ module DepsCheck
 
 import Data.Vect
 
+import Infra
+
 import Language.Reflection
+
+%language ElabReflection
 
 %macro
 typeOf : Elaboration m => Name -> m $ List Type
@@ -14,3 +18,5 @@ data IsFS : (n : _) -> Fin n -> Type where
 export
 0 listToCheck : List Type
 listToCheck = typeOf `{ItIsFS}
+
+%runElab ppTys listToCheck
