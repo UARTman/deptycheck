@@ -1,5 +1,4 @@
-1/2: Building Infra (Infra.idr)
-2/2: Building RenamingTTImpEqCheck (RenamingTTImpEqCheck.idr)
+1/1: Building RenamingTTImpEqCheck (RenamingTTImpEqCheck.idr)
 LOG deptycheck.reflection.ttimp-eq-up-to-renamings:0: unit is unit (plain) >>: OKAY
 LOG deptycheck.reflection.ttimp-eq-up-to-renamings:0: unit is unit (plain) <<: OKAY
 LOG deptycheck.reflection.ttimp-eq-up-to-renamings:0: unit is unit (ap z) >>: OKAY
