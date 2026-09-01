@@ -46,6 +46,11 @@ CA_INFRA = """1/2: Building ConsApps (ConsApps.idr)
 
 CA_ONLY = """1/1: Building ConsApps (ConsApps.idr)"""
 
+INFRA_RTIEC = """1/2: Building Infra (Infra.idr)
+2/2: Building RenamingTTImpEqCheck (RenamingTTImpEqCheck.idr)"""
+
+RTIEC_ONLY = """1/1: Building RenamingTTImpEqCheck (RenamingTTImpEqCheck.idr)"""
+
 
 def patch_expected(s: str) -> str:
     """Remove references to deleted symlinks from golden test expected file"""
@@ -56,6 +61,7 @@ def patch_expected(s: str) -> str:
         .replace(INFRA_CSC, CSC_ONLY)
         .replace(SHARED_TEST, TEST_ONLY)
         .replace(CA_INFRA, CA_ONLY)
+        .replace(INFRA_RTIEC, RTIEC_ONLY)
     )
 
 

@@ -1,0 +1,4 @@
+[custom.all.renaming-ttimp-eq-common]
+type = "local"
+path = "_common"
+ipkg = "renaming-ttimp-eq-common.ipkg"
