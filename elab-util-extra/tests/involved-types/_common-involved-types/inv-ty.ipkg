@@ -2,4 +2,4 @@ package inv-tys
 
 opts = "--no-color --console-width 0"
 
-depends = elab-util-extra
+depends = elab-util-extra, inv-ty-shared
