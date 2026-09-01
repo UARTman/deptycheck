@@ -1,5 +1,4 @@
-1/2: Building Common (Common.idr)
-2/2: Building Negative (Negative.idr)
+1/1: Building Negative (Negative.idr)
 Error: While processing right hand side of bad_ass_no_var. Can't find an implementation for Lookup (MkName "x") vars.
 
 Negative:12:3--12:15
