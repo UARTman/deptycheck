@@ -1,5 +1,4 @@
-1/2: Building DepsCheck (DepsCheck.idr)
-2/2: Building Infra (Infra.idr)
+1/1: Building DepsCheck (DepsCheck.idr)
 LOG deptycheck.arg-deps:0: type        : (x : Nat) -> (arg : \{x:0} => S {x:0} = S) -> ()
 LOG deptycheck.arg-deps:0: dependencies: [[], []]
 

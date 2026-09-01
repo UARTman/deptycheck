@@ -1,0 +1,4 @@
+[custom.all.arg-deps-shared]
+type = "local"
+path = "_common"
+ipkg = "arg-deps-shared.ipkg"

@@ -1,5 +1,9 @@
 module DepsCheck
 
+import Infra
+
+%language ElabReflection
+
 export
 listToCheck : List Type
 listToCheck =
@@ -8,3 +12,5 @@ listToCheck =
   , (Nat -> Nat -> Nat)
   , ({a : Type} -> List a -> Nat)
   ]
+
+%runElab ppTys listToCheck
