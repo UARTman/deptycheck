@@ -1,6 +1,9 @@
 module TypesAndInvolved
 
+import Infra
 import Language.Reflection.Compat
+
+%language ElabReflection
 
 %default total
 
@@ -55,3 +58,5 @@ typesAndInvolved =
     , "WithDefault"
     ])
   ]
+
+%runElab for_ typesAndInvolved $ \(n, r, ns) => printInvolvedTypesVerdict n r ns
