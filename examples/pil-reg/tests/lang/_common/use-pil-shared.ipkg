@@ -1,6 +1,7 @@
-package example-usages
+package use-pil-shared
 
 opts = "--no-color --console-width 0"
 
 depends = pil-reg
-        , use-pil-shared
+
+modules = Common
