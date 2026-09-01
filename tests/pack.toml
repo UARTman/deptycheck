@@ -1,4 +1,0 @@
-[custom.all.test-distribution-common]
-type = "local"
-path = "lib/distribution/_common"
-ipkg = "test-distribution-common.ipkg"
