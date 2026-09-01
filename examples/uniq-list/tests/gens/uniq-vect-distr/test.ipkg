@@ -5,3 +5,4 @@ main = CheckDistribution
 depends = deptycheck
         , summary-stat
         , uniq-list
+        , test-distribution-common

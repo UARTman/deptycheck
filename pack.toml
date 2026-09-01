@@ -99,3 +99,13 @@ type = "local"
 path = "examples/pil-dyn"
 ipkg = "pil-dyn.ipkg"
 test = "tests/tests.ipkg"
+
+#############
+### Tests ###
+#############
+
+[custom.all.test-distribution-common]
+type = "local"
+path = "tests/lib/distribution/_common"
+ipkg = "test-distribution-common.ipkg"
+
