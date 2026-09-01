@@ -109,12 +109,8 @@ def patch_file(fl: Path, patch_fn: Callable[[str], str]):
 
 
 for item in target_path.rglob("*"):
-    if (
-        item.is_dir()
-        and item.name != "_shared"
-        and item.name != "_common"
-        and item.name != "_common-deep-cons-app"
-    ):
+    names = ["_shared", "_common", "_common-deep-cons-app"]
+    if item.is_dir() and item.name not in names:
         print(f"Directory found: {item}")
         (item / "AlternativeCore.idr").unlink(missing_ok=True)
         (item / "RunDerivedGen.idr").unlink(missing_ok=True)
