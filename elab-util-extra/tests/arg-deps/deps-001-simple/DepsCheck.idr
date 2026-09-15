@@ -4,13 +4,9 @@ import Infra
 
 %language ElabReflection
 
-export
-listToCheck : List Type
-listToCheck =
+%runElab ppTys
   [ Unit
   , (Nat -> Nat)
   , (Nat -> Nat -> Nat)
   , ({a : Type} -> List a -> Nat)
   ]
-
-%runElab ppTys listToCheck
