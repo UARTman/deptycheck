@@ -1,7 +1,6 @@
 module TypesAndInvolved
 
 import Infra
-import Language.Reflection.Compat
 
 %language ElabReflection
 
@@ -12,9 +11,7 @@ mutual
   data X a b = MkX a (Y a b)
   data Y a b = Nil | MkY a (X a b)
 
-public export
-typesAndInvolved : List (Name, Count, List Name)
-typesAndInvolved =
+%runElab printAllInvolvedTypesVerdict
   [ ("X", M0, ["X", "Y"])
   , ("TTImp", M0,
     [ "AltType"
@@ -58,5 +55,3 @@ typesAndInvolved =
     , "WithDefault"
     ])
   ]
-
-%runElab for_ typesAndInvolved $ \(n, r, ns) => printInvolvedTypesVerdict n r ns
