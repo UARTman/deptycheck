@@ -1,8 +1,10 @@
 module DepsCheck
 
-export
-listToCheck : List Type
-listToCheck =
+import Infra
+
+%language ElabReflection
+
+%runElab printTyDeps
   [ Unit
   , (Nat -> Nat)
   , (Nat -> Nat -> Nat)

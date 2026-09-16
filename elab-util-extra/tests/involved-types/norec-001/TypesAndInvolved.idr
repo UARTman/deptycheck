@@ -1,6 +1,8 @@
 module TypesAndInvolved
 
-import Language.Reflection.Compat
+import Infra
+
+%language ElabReflection
 
 %default total
 
@@ -8,9 +10,7 @@ export
 data X : Type -> Type -> Type where
   XX : Either a b -> X a b
 
-public export
-typesAndInvolved : List (Name, Count, List Name)
-typesAndInvolved =
+%runElab printAllInvolvedTypesVerdict
   [ ("Bool", M0, ["Prelude.Basics.Bool"])
   , ("Bool", M0, ["Bool"])
   , ("Bool", MW, ["Prelude.Basics.Bool"])

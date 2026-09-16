@@ -1,10 +1,11 @@
 module DepsCheck
 
 import Data.Vect
+import Infra
 
-export
-listToCheck : List Type
-listToCheck =
+%language ElabReflection
+
+%runElab printTyDeps
   [ ({n : Nat} -> {a : Type} -> Vect n a -> Nat)
   , ({n : Nat} -> {a : Type} -> (v : Vect n a) -> length v = 5 -> Nat)
   , ({a : Type} -> (xs : List a) -> Vect (length xs) a -> Nat)

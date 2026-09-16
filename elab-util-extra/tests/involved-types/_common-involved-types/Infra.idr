@@ -1,11 +1,8 @@
 module Infra
 
-import Language.Reflection.Compat.TypeInfo
+import public Language.Reflection.Compat.TypeInfo
 
-import public TypesAndInvolved
-
-%language ElabReflection
-
+export
 printInvolvedTypesVerdict : Name -> Count -> List Name -> Elab Unit
 printInvolvedTypesVerdict tyName minRig expected = do
   logMsg "deptycheck.involved-types" 0 "given type: \{show tyName}"
@@ -18,4 +15,6 @@ printInvolvedTypesVerdict tyName minRig expected = do
     logMsg "deptycheck.involved-types" 0 "found   : \{show invTys}"
     logMsg "deptycheck.involved-types" 0 "expected: \{show expected}"
 
-%runElab for_ typesAndInvolved $ \(n, r, ns) => printInvolvedTypesVerdict n r ns
+export
+printAllInvolvedTypesVerdict : List (Name, Count, List Name) -> Elab Unit
+printAllInvolvedTypesVerdict = traverse_ $ \(n, r, ns) => printInvolvedTypesVerdict n r ns

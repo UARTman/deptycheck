@@ -1,5 +1,4 @@
-1/2: Building RunDerivedGen (RunDerivedGen.idr)
-2/2: Building DerivedGen (DerivedGen.idr)
+1/1: Building DerivedGen (DerivedGen.idr)
 LOG deptycheck.derive.least-effort:7: DerivedGen.Program[0(n), 1(ctx)] Assign - used final order: [#8, #9]
 LOG deptycheck.derive.least-effort:7: DerivedGen.Program[0(n), 1(ctx)] Finish - used final order: []
 LOG deptycheck.derive.least-effort:7: DerivedGen.Duplicate[0(n), 3(vs)] JustDup - used final order: [#2 (src), #3 (dst)]

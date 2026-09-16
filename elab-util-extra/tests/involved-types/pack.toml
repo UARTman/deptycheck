@@ -1,0 +1,4 @@
+[custom.all.inv-ty-shared]
+type = "local"
+path = "_common-involved-types"
+ipkg = "inv-ty-shared.ipkg"

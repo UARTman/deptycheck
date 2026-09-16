@@ -1,0 +1,5 @@
+package sin-common
+
+depends = deptycheck
+
+modules = Shared

@@ -1,0 +1,5 @@
+[custom.all.cons-common]
+type = "local"
+path = "_common-deep-cons-app"
+ipkg = "cons-common.ipkg"
+
