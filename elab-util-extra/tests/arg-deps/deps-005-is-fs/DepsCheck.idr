@@ -15,4 +15,4 @@ typeOf n = map (mapMaybe id) $ for !(getType n) $ catch . check {expected=Type} 
 data IsFS : (n : _) -> Fin n -> Type where
   ItIsFS : IsFS _ (FS i)
 
-%runElab ppTys $ typeOf `{ItIsFS}
+%runElab printTyDeps $ typeOf `{ItIsFS}

@@ -14,8 +14,8 @@ unlist e = do
   a :: unlist b
 
 public export
-ppTys : (0 _ : List Type) -> Elab Unit
-ppTys tys = do
+printTyDeps : (0 _ : List Type) -> Elab Unit
+printTyDeps tys = do
   tys <- quote tys
   let tys = unlist tys
   for_ tys $ \expr => do

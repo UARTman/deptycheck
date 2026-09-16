@@ -4,7 +4,7 @@ import Infra
 
 %language ElabReflection
 
-%runElab ppTys
+%runElab printTyDeps
   [ Unit
   , (Nat -> Nat)
   , (Nat -> Nat -> Nat)
