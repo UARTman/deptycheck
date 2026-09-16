@@ -2,19 +2,12 @@ module ConsApps
 
 import Infra
 
-import Language.Reflection.Compat
-
 %default total
-
-%language ElabReflection
 
 %hide Data.List.Quantifiers.Right
 %hide Data.List.Quantifiers.Left
 
-private infix 1 @@@
-
-(@@@) : b -> a -> (a, b)
-y @@@ x = (x, y)
+%language ElabReflection
 
 public export
 data X : Type -> Type -> Type where
@@ -27,9 +20,7 @@ data MyList : Type -> Type where
 
 export infixr 5 `MC`
 
-public export
-consApps : Elab $ List (List Name, TTImp)
-consApps = pure
+%runElab printDeepConsApps $ pure
   [ `(XX $ Right Unit) @@@ []
   , `(XX $ Right a) @@@ ["a"]
   , `(XX $ Right MkUnit) @@@ []
@@ -40,5 +31,3 @@ consApps = pure
   , `(XX $ Left $ a `MC` b `MC` c `MC` MM) @@@ ["n", "a", "b", "c"]
   , `(XX $ Left $ a `MC` Z `MC` c `MC` MM) @@@ ["n", "a", "b", "c"]
   ]
-
-%runElab consApps >>= traverse_ (uncurry printDeepConsApp)

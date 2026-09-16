@@ -2,24 +2,15 @@ module ConsApps
 
 import Infra
 
-import Language.Reflection.Compat
-
 %default total
 
 %language ElabReflection
-
-private infix 1 @@@
-
-(@@@) : b -> a -> (a, b)
-y @@@ x = (x, y)
 
 export
 data X : Type -> Type -> Type where
   XX : Either a b -> X a b
 
-public export
-consApps : Elab $ List (List Name, TTImp)
-consApps = pure
+%runElab printDeepConsApps $ pure
   [ `(b) @@@ ["a"]
   , `(a) @@@ []
   , `(X a a) @@@ []
@@ -30,5 +21,3 @@ consApps = pure
   , `(Y a) @@@ ["a"]
   , `(Y a b) @@@ ["a"]
   ]
-
-%runElab consApps >>= traverse_ (uncurry printDeepConsApp)

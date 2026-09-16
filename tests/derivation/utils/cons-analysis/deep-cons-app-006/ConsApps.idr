@@ -1,18 +1,12 @@
 module ConsApps
 
-import public Data.List.Views
+import Data.List.Views
 
 import Infra
-
-import Language.Reflection.Compat
-import Language.Reflection.Expr
 
 %default total
 
 %language ElabReflection
-
-%hide Data.List.Quantifiers.Right
-%hide Data.List.Quantifiers.Left
 
 rhsConsOf : Name -> Elab $ List (List Name, TTImp)
 rhsConsOf n = getInfo' n <&> \tyInfo => tyInfo.cons <&> \con => (con.args <&> argName', con.type)
@@ -21,14 +15,10 @@ public export
 data EqExp : (tyL : Type) -> (tyR : Type) -> tyL -> tyR -> Type where
   ReflExp : (x : a) -> EqExp a a x x
 
-public export
-consApps : Elab $ List (List Name, TTImp)
-consApps = join <$> sequence
+%runElab printDeepConsApps $ join <$> sequence
   [ rhsConsOf `{Nat}
   , rhsConsOf `{Vect}
   , rhsConsOf `{Data.List.Views.Split}
   , rhsConsOf `{Builtin.Equal}
   , rhsConsOf `{EqExp}
   ]
-
-%runElab consApps >>= traverse_ (uncurry printDeepConsApp)
