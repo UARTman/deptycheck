@@ -6,4 +6,3 @@ depends = deptycheck
 
 modules = AlternativeCore
         , RunDerivedGen
-
