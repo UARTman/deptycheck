@@ -107,36 +107,36 @@ processArg tyName argIdx ga with (ga.given)
     logValue DetailedDebug "deptycheck.derive.specialisation" [tyName, ga]
       "No given value, passing through"
       $ singleArg argIdx ga
-  processArg tyName argIdx ga | Just x = do
+  processArg tyName' argIdx ga | Just x = do
     let (appLhs, appTerms) = unAppAny x
     let IVar _ tyName = appLhs
       | IPrimVal _ (PrT _) =>
-        logValue DetailedDebug "deptycheck.derive.specialisation" [tyName, ga]
+        logValue DetailedDebug "deptycheck.derive.specialisation" [tyName', ga]
           "Given a primitive type invocation, specialising"
           (x, [])
       | _ =>
-        logValue DetailedDebug "deptycheck.derive.specialisation" [tyName, ga]
+        logValue DetailedDebug "deptycheck.derive.specialisation" [tyName', ga]
           "Given value head is not a variable, passing through"
           $ singleArg argIdx ga
     case lookupType tyName of
       Just tyInfo => do
         let (_ :: _) = appTerms
           | [] =>
-            logValue DetailedDebug "deptycheck.derive.specialisation" [tyName, ga]
+            logValue DetailedDebug "deptycheck.derive.specialisation" [tyName', ga]
               "Given a type invocation w/o arguments, specialising"
               (x, [])
         let givens = map (uncurry MkGenArg) $ zip tyInfo.args $ popArgVals tyInfo.args (mkAllApps appTerms)
-        logPoint DetailedDebug "deptycheck.derive.specialisation" [tyName, ga]
+        logPoint DetailedDebug "deptycheck.derive.specialisation" [tyName', ga]
           "Given a type invocation, traversing arguments: \{show $ map (fromMaybe "" . name . arg) givens}"
         map (mapFst $ reAppAny appLhs) $ processArgs' tyName argIdx $ takeWhile (.isGiven) givens
       Nothing => do
         if (snd (unPi ga.arg.type) == `(Type))
           then
-            logValue DetailedDebug "deptycheck.derive.specialisation" [tyName, ga]
+            logValue DetailedDebug "deptycheck.derive.specialisation" [tyName', ga]
               "Given a non-global type expr, passing through"
               $ singleArg argIdx ga
           else
-            logValue DetailedDebug "deptycheck.derive.specialisation" [tyName, ga]
+            logValue DetailedDebug "deptycheck.derive.specialisation" [tyName', ga]
               "Given a non-type expr, passing through"
               $ singleArg argIdx ga
 
